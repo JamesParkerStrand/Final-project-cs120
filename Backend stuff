@@ -1,1 +1,71 @@
 
+size(500,500);
+
+int x = 250;
+
+int MidLaneIndex = -1;
+
+int laneLines = 6;
+
+void keyPressed() {
+    if(key == 'd') {
+        x += 10;
+        ///println(x/100);
+    }
+    if(key == 'a') {
+        x -= 10;
+        ///println(x/100);
+    }
+
+    if(key == 'n') {
+        println("current x: " + x);
+        println("current index x: " + x/100);
+        println("current other lane:" + MidLaneIndex);
+    }
+
+    for(int i = 1; i <= laneLines; i = i + 1) {
+
+        // checking between lower bound and middle lane
+        // i * 100 is picking a line of the lane, and then determining i * 100 -+ an offset
+        if(x > i * 100 - 20 && x < i * 100 ) {
+            println("middle lane");
+            MidLaneIndex = (x/100) + 1;
+            println(x/ 100 + "current pos");
+            println(MidLaneIndex + "other");
+            break;
+        }
+        // checking between upper bound and middle lane
+        if(x < i * 100 + 20 && x > i * 100 ) {
+            println("middle lane farther");
+            MidLaneIndex = (x/100) - 1;
+            println(x/ 100 + "current pos");
+            println(MidLaneIndex + "other");
+            break;
+        }
+
+        // dead center middle
+        if(x == i * 100) {
+            println("middle");
+            MidLaneIndex = (x/100) - 1;
+            println(x/ 100 + "current pos");
+            println(MidLaneIndex + "other");
+            break;
+        }
+        else {
+            MidLaneIndex = -1;
+        }
+
+    }
+}
+
+
+
+
+
+void draw() {
+    background(rgb(255,255,255));
+    ellipse(x,40,10,10);
+    for(int j = 1; j < 6; j++) {
+        ellipse(j * 100,40,10,10);
+    }
+}
